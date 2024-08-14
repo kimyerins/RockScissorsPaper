@@ -24,16 +24,66 @@ const choice = {
   },
 };
 function App() {
-  let [userSelect, setUserSelect] = useState(null);
-  //let [computerSelect, setComputerSelect] = useState(null);
+  const [userSelect, setUserSelect] = useState(null);
+  const [computerSelect, setComputerSelect] = useState(null);
+  const [userResult, setUserResult] = useState("");
+  const [computerResult, setComputerResult] = useState("");
   const play = (userChoice) => {
-    userSelect = setUserSelect(choice[userChoice]);
+    setUserSelect(choice[userChoice]);
+    let computerChoice = randomChoice();
+    setComputerSelect(computerChoice);
+    const results = judgement(choice[userChoice], computerChoice);
+    setUserResult(results.userResult);
+    setComputerResult(results.computerResult);
   };
+
+  const judgement = (user, computer) => {
+    // user === computer -> 비김(tie)
+    // user === rock, computer === scissors -> user Win
+    // user === rock, computer === paper -> user Lose
+    // user === scissors, computer === paper -> user Win
+    // user === scissorsm, computer === rock -> user Lose
+    // user === paper, computer === rock -> user Win
+    // user === paper, computer === scissors -> user Lose
+
+    if (user.name === computer.name) {
+      return { userResult: "tie", computerResult: "tie" };
+    } else if (user.name === "Rock")
+      return computer.name === "Scissors"
+        ? { userResult: "Win", computerResult: "Lose" }
+        : { userResult: "Lose", computerResult: "Win" };
+    else if (user.name === "Scissors")
+      return computer.name === "Paper"
+        ? { userResult: "Win", computerResult: "Lose" }
+        : { userResult: "Lose", computerResult: "Win" };
+    else if (user.name === "Paper")
+      return computer.name === "Rock"
+        ? { userResult: "Win", computerResult: "Lose" }
+        : { userResult: "Lose", computerResult: "Win" };
+  };
+
+  const randomChoice = () => {
+    let itemArray = Object.keys(choice); //객체의 키값만 뽑아서 어레이로 만들어주는 함수다.
+    let randomItem = Math.floor(Math.random() * itemArray.length);
+    let final = itemArray[randomItem];
+    return choice[final];
+  };
+
   return (
     <div>
       <div className="box_wrap">
-        <Box tit="You" item={userSelect} />
-        {/* <Box tit="Computer" item={computerSelect} /> */}
+        <Box
+          tit="You"
+          item={userSelect}
+          result={userResult}
+          classNames={userResult}
+        />
+        <Box
+          tit="Computer"
+          item={computerSelect}
+          result={computerResult}
+          classNames={computerResult}
+        />
       </div>
       <div className="btn_wrap">
         <button onClick={() => play("scissors")}>가위</button>
