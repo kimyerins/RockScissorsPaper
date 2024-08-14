@@ -72,18 +72,8 @@ function App() {
   return (
     <div>
       <div className="box_wrap">
-        <Box
-          tit="You"
-          item={userSelect}
-          result={userResult}
-          classNames={userResult}
-        />
-        <Box
-          tit="Computer"
-          item={computerSelect}
-          result={computerResult}
-          classNames={computerResult}
-        />
+        <Box tit="You" item={userSelect} result={userResult} />
+        <Box tit="Computer" item={computerSelect} result={computerResult} />
       </div>
       <div className="btn_wrap">
         <button onClick={() => play("scissors")}>가위</button>
