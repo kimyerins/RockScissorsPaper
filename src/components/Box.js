@@ -7,7 +7,6 @@ export const Box = (props) => {
     if (props.result === "tie") return "tie";
     return "";
   };
-
   return (
     <div className={`box ${getResultClass()}`}>
       <h1>{props.tit}</h1>

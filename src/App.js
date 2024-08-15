@@ -8,31 +8,30 @@ import Box from "./components/Box";
 // 4. 컴퓨터는 랜덤하게 아이템 선택이 된다
 // 5. 3 4의 결과를 가지고 누가 이겼는지 승패를 따진다
 // 6. 승패결과에따라 테두리 색이 바뀐다(이기면 초록, 지면 빨강, 비기면 검은색)
-
-const choice = {
-  rock: {
-    name: "Rock",
-    img: "https://image.auction.co.kr/itemimage/28/65/8e/28658ea5e6.jpg",
-  },
-  scissors: {
-    name: "Scissors",
-    img: "https://cdn.imweb.me/thumbnail/20200514/7fc8b1411fa8d.png",
-  },
-  paper: {
-    name: "Paper",
-    img: "https://m.media-amazon.com/images/I/61OorFhm6SL._AC_UF894,1000_QL80_.jpg",
-  },
-};
 function App() {
+  const choice = {
+    rock: {
+      name: "Rock",
+      img: "https://image.auction.co.kr/itemimage/28/65/8e/28658ea5e6.jpg",
+    },
+    scissors: {
+      name: "Scissors",
+      img: "https://cdn.imweb.me/thumbnail/20200514/7fc8b1411fa8d.png",
+    },
+    paper: {
+      name: "Paper",
+      img: "https://m.media-amazon.com/images/I/61OorFhm6SL._AC_UF894,1000_QL80_.jpg",
+    },
+  };
   const [userSelect, setUserSelect] = useState(null);
   const [computerSelect, setComputerSelect] = useState(null);
   const [userResult, setUserResult] = useState("");
   const [computerResult, setComputerResult] = useState("");
-  const play = (userChoice) => {
-    setUserSelect(choice[userChoice]);
+  const play = (userChioce) => {
+    setUserSelect(choice[userChioce]);
     let computerChoice = randomChoice();
     setComputerSelect(computerChoice);
-    const results = judgement(choice[userChoice], computerChoice);
+    let results = judgement(choice[userChioce], computerChoice);
     setUserResult(results.userResult);
     setComputerResult(results.computerResult);
   };
@@ -63,17 +62,16 @@ function App() {
   };
 
   const randomChoice = () => {
-    let itemArray = Object.keys(choice); //객체의 키값만 뽑아서 어레이로 만들어주는 함수다.
+    let itemArray = Object.keys(choice);
     let randomItem = Math.floor(Math.random() * itemArray.length);
     let final = itemArray[randomItem];
     return choice[final];
   };
-
   return (
     <div>
       <div className="box_wrap">
-        <Box tit="You" item={userSelect} result={userResult} />
-        <Box tit="Computer" item={computerSelect} result={computerResult} />
+        <Box tit={"You"} item={userSelect} result={userResult} />
+        <Box tit={"Computer"} item={computerSelect} result={computerResult} />
       </div>
       <div className="btn_wrap">
         <button onClick={() => play("scissors")}>가위</button>
